@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create cache directory
+        run: mkdir -p ~/.cache-demo && echo "demo-data" > ~/.cache-demo/file.txt
+
       - name: Cache dependencies
         id: cache-step
         uses: actions/cache@v4

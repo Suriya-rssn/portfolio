@@ -1,4 +1,4 @@
-name: Simple Action
+name: Cache Demo
 
 on:
   push:
@@ -6,11 +6,27 @@ on:
       - main
 
 jobs:
-  test:
+  cache-job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: 23f2005377@ds.study.iitm.ac.in
-        run: echo "Hello from GitHub Actions!"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: cache-0f52b74
+
+      - name: prime-cache-0f52b74
+        run: echo "Cache hit? ${{ steps.cache.outputs.cache-hit }}"
+
+      - name: Install dependencies
+        run: npm install
